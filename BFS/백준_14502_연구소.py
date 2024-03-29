@@ -1,6 +1,8 @@
 import copy
+import sys
 from collections import deque
 
+input = sys.stdin.readline
 move = [[1, 0], [-1, 0], [0, 1], [0, -1]]
 n, m = map(int, input().split())
 visited = [[False for i in range(m)] for j in range(n)]

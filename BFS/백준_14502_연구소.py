@@ -5,13 +5,10 @@ from collections import deque
 input = sys.stdin.readline
 move = [[1, 0], [-1, 0], [0, 1], [0, -1]]
 n, m = map(int, input().split())
-visited = [[False for i in range(m)] for j in range(n)]
 graph = []
 for _ in range(n):
     graph.append(list(map(int, input().split())))
 # print(graph)
-
-
 
 def bfs():
     queue = deque()
@@ -53,9 +50,3 @@ def makeWall(cnt):
 answer = 0
 makeWall(0)
 print(answer)
-
-
-
-
-
-

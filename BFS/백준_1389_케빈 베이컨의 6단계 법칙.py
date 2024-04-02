@@ -1,5 +1,4 @@
 from collections import deque
-from copy import deepcopy
 import sys
 input = sys.stdin.readline
 
@@ -41,9 +40,12 @@ for i in range(1, n + 1):
 # print(result)
 answer_cnt = min(result)
 
-for i in range(len(result)):
-    num = result[i]
-    if num == answer_cnt:
-        print(i+1)
-        break
+# for i in range(len(result)):
+#     num = result[i]
+#     if num == answer_cnt:
+#         print(i+1)
+#         break
+
+print(result.index(min(result))+1)
+
 

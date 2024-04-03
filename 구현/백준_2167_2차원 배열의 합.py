@@ -13,6 +13,5 @@ for _ in range(k):
     result = 0
     left_y, left_x, right_y, right_x = map(int, input().split())
     for y in range(left_y - 1, right_y):
-        for x in range(left_x - 1, right_x):
-            result += matrix[y][x]
+        result += sum(matrix[y][left_x - 1:right_x])
     print(result)

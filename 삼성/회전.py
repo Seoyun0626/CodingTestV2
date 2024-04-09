@@ -1,19 +1,26 @@
 # zip() 활용한 회전 - 정사각형, 직사각형 모두 적용 가능
 arr = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]
-print(arr)
+for cow in arr:
+    print(cow)
 
 ## zip 활용
 ### 시계 방향 90 (=반시계 방향 270)
 arr_90 = list(map(list, zip(*arr[::-1])))
-print(arr_90)
+for cow in arr_90:
+    print(cow)
+
 
 ### 시계 방향 180 (=반시계 방향 180)
 arr_180 = [a[::-1] for a in arr[::-1]]
-print(arr_180)
+for cow in arr_180:
+    print(cow)
+
 
 ### 시계 방향 270 (=반시계 방향 90)
-arr_270 = [x[::-1] for x in list(map(list, zip(*arr[::-1])))]
-print(arr_270)
+arr_270 = [x[::-1] for x in list(map(list, zip(*arr[::-1])))[::-1]]
+for cow in arr_270:
+    print(cow)
+
 
 
 ## 인덱스 규칙 찾아서 회전

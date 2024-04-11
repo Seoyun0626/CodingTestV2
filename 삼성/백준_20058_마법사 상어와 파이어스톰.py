@@ -49,7 +49,7 @@ def minus(rotate_graph, y, x):
 
 
 for i in range(q):
-    print("파이어스톰 시전")
+    # print("파이어스톰 시전")
     small_graph_size = 2 ** (level[i])
     rotate_graph = rotate_90(small_graph_size)
     # print("90도 회전 후 그래프")
@@ -62,26 +62,54 @@ for i in range(q):
                 minus(rotate_graph, y, x)
     for y, x in minus_list:
         rotate_graph[y][x] -= 1
-    print("minus함수 후 그래프")
-    for cow in rotate_graph:
-        print(cow)
+    # print("minus함수 후 그래프")
+    # for cow in rotate_graph:
+    #     print(cow)
 
-def bigIce(y, x, visited, cnt):
+## 맞지만 이해가 어려운 코드
 
-    visited[y][x] = cnt
-    maxbigIce = 0
+# def bigIce(y, x):
+#
+#     rotate_graph[y][x] = 0
+#     cnt = 1
+#     for cow in rotate_graph:
+#         print(cow)
+#     print()
+#     for dy, dx in move:
+#         if 0 <= y + dy < map_size and 0 <= x + dx < map_size:
+#             if rotate_graph[y + dy][x + dx] != 0:
+#                 cnt += bigIce(y + dy, x + dx)
+#     return cnt
 
-    for dy, dx in move:
-        if 0 <= y + dy < map_size and 0 <= x + dx < map_size:
-            if rotate_graph[y + dy][x + dx] != 0 and visited[y + dy][x + dx] == 0:
-                bigIce(y + dy, x + dx, visited, cnt + 1)
-    print("y, x에서 visited")
-    for cow in visited:
-        print(cow)
-    for cow in visited:
-        if max(cow) > maxbigIce:
-            maxbigIce = max(cow)
-    return maxbigIce
+## 덩어리 구하는 함수
+def bigCnt():
+
+    maxcnt = 0
+    visited = [[0 for _ in range(map_size)] for _ in range(map_size)]
+
+    for y in range(map_size):
+        for x in range(map_size):
+            tmp_cnt = 0
+            if rotate_graph[y][x] == 0 or visited[y][x] != 0:
+                continue
+
+            queue.append((y, x))
+            visited[y][x] = 1
+
+            while queue:
+                y, x = queue.popleft()
+                tmp_cnt += 1
+                for dy, dx in move:
+                    if 0 <= y + dy < map_size and 0 <= x + dx < map_size:
+                        if rotate_graph[y + dy][x + dx] != 0 and visited[y + dy][x + dx] == 0:
+                            visited[y + dy][x + dx] = 1
+                            queue.append((y + dy, x + dx))
+
+            if maxcnt < tmp_cnt:
+                maxcnt = tmp_cnt
+            visited = [[0 for _ in range(map_size)] for _ in range(map_size)]
+    return maxcnt
+
 
 
 ## 남아 있는 얼음 합
@@ -91,14 +119,7 @@ for cow in rotate_graph:
 print(result1)
 
 ## 가장 큰 덩어리 칸의 개수
-result2 = 0
-for y in range(len(rotate_graph)):
-    for x in range(len(rotate_graph)):
-        if rotate_graph[y][x] != 0:
-            visited = [[0 for _ in range(len(rotate_graph))] for _ in range(len(rotate_graph))]
-            tmp_cnt = bigIce(y, x, visited, 1)
-            if result2 < tmp_cnt:
-                result2 = tmp_cnt
+result2 = bigCnt()
 print(result2)
 
 

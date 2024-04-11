@@ -43,9 +43,8 @@ def minus(rotate_graph, y, x):
             if rotate_graph[y + dy][x + dx] != 0:
                 cnt += 1
     if cnt < 3:
-        return -1
-    else:
-        return 0
+        minus_list.append((y, x))
+
 
 
 
@@ -53,15 +52,16 @@ for i in range(q):
     print("파이어스톰 시전")
     small_graph_size = 2 ** (level[i])
     rotate_graph = rotate_90(small_graph_size)
-    print("90도 회전 후 그래프")
-    for cow in rotate_graph:
-        print(cow)
-
+    # print("90도 회전 후 그래프")
+    # for cow in rotate_graph:
+    #     print(cow)
+    minus_list = []
     for y in range(len(rotate_graph)):
         for x in range(len(rotate_graph)):
             if rotate_graph[y][x] != 0:
-                num = minus(rotate_graph, y, x)
-                rotate_graph[y][x] += num
+                minus(rotate_graph, y, x)
+    for y, x in minus_list:
+        rotate_graph[y][x] -= 1
     print("minus함수 후 그래프")
     for cow in rotate_graph:
         print(cow)
@@ -75,6 +75,9 @@ def bigIce(y, x, visited, cnt):
         if 0 <= y + dy < map_size and 0 <= x + dx < map_size:
             if rotate_graph[y + dy][x + dx] != 0 and visited[y + dy][x + dx] == 0:
                 bigIce(y + dy, x + dx, visited, cnt + 1)
+    print("y, x에서 visited")
+    for cow in visited:
+        print(cow)
     for cow in visited:
         if max(cow) > maxbigIce:
             maxbigIce = max(cow)
@@ -88,8 +91,14 @@ for cow in rotate_graph:
 print(result1)
 
 ## 가장 큰 덩어리 칸의 개수
-visited = [[0 for _ in range(len(rotate_graph))] for _ in range(len(rotate_graph))]
-result2 = bigIce(0, 0, visited, 1)
+result2 = 0
+for y in range(len(rotate_graph)):
+    for x in range(len(rotate_graph)):
+        if rotate_graph[y][x] != 0:
+            visited = [[0 for _ in range(len(rotate_graph))] for _ in range(len(rotate_graph))]
+            tmp_cnt = bigIce(y, x, visited, 1)
+            if result2 < tmp_cnt:
+                result2 = tmp_cnt
 print(result2)
 
 
